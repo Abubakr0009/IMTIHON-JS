@@ -101,7 +101,7 @@ function index() {
 
 
 function signin() {
-    alert("Redirecting to the Dashboard...");
+    alert("EXIT to the Dashboard...");
     window.location.href = "student_list.html"; // Sahifa nomini dashboard sahifangizga moslang
 }
 
