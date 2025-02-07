@@ -2,13 +2,7 @@
 
 
 
-// ================================ DASHBOARD =====================================
-
-// document.getElementById('add-student-btn').addEventListener('click', openAddStudentForm);
-// document.getElementById('close-modal').addEventListener('click', closeAddStudentForm);
-// document.getElementById('add-student-form').addEventListener('submit', addStudent);
-// document.getElementById('search-bar').addEventListener('input', searchStudents);
-
+// ================================ DASHBOARD ====================================
 function openAddStudentForm() {
   document.getElementById('new-student-modal').style.display = 'block';
 }
@@ -17,29 +11,7 @@ function closeAddStudentForm() {
   document.getElementById('new-student-modal').style.display = 'none';
 }
 
-function addStudent(event) {
-  event.preventDefault();
-  const name = document.getElementById('student-name').value;
-  const email = document.getElementById('student-email').value;
-  const phone = document.getElementById('student-phone').value;
-  const enroll = document.getElementById('student-enroll').value;
-  const admissionDate = document.getElementById('admission-date').value;
 
-  const newRow = document.createElement('tr');
-  newRow.innerHTML = `
-    <td>${name}</td>
-    <td>${email}</td>
-    <td>${phone}</td>
-    <td>${enroll}</td>
-    <td>${admissionDate}</td>
-    <td>
-      <button class="edit-btn" onclick="editStudent(this)">✏️</button>
-      <button class="delete-btn" onclick="deleteStudent(this)">🗑️</button>
-    </td>
-  `;
-  document.querySelector('#students-table tbody').appendChild(newRow);
-  closeAddStudentForm();
-}
 
 function editStudent(button) {
   const row = button.closest('tr');
@@ -84,89 +56,49 @@ function logout() {
     window.location.href = "student_list.html";
 }
 document.getElementById("signupForm").addEventListener("submit", function(event) {
-    event.preventDefault(); // Formning qayta yuklanishini oldini oladi
+    event.preventDefault(); 
     signin();
 });
 
 function index() {
-    alert("Redirecting to the homepage...");
+    alert("Redirecting to the Sigin...");
     window.location.href = "Signin.html";
 }
 
 
-function index() {
-    alert("Redirecting to the signin...");
-    window.location.href = "Signin.html";
-}
+
 
 
 function signin() {
     alert("EXIT to the Dashboard...");
-    window.location.href = "student_list.html"; // Sahifa nomini dashboard sahifangizga moslang
+    window.location.href = "student_list.html"; 
+
 }
-
-
    
-// document.getElementById("signupForm").addEventListener("submit", function(event) {
-//     event.preventDefault(); 
-
-    
-//     let login = document.getElementById("login").value;
-//     let password = document.getElementById("password").value;
-
-//     if (login && password) {
-//         let userData = {
-//             login: login,
-//             password: password
-//         };
-
-//         localStorage.setItem("userData", JSON.stringify(userData));
-//         alert("Ma'lumotlar muvaffaqiyatli saqlandi!");
-//     } else {
-//         alert("Iltimos, barcha maydonlarni to'ldiring.");
-//     }
-// });
-
-// window.onload = function() {
-//     let savedData = localStorage.getItem("userData");
-
-//     if (savedData) {
-//         let parsedData = JSON.parse(savedData);
-//         document.getElementById("login").value = parsedData.login;
-//         document.getElementById("password").value = parsedData.password;
-//     }
-// };
 
 
-// document.getElementById("signupForm").addEventListener("submit", function(event) {
-//     event.preventDefault(); 
+window.onload = function() {
+    let savedData = localStorage.getItem("userData");
 
-//     let login = document.getElementById("login").value;
-//     let password = document.getElementById("password").value;
+    if (savedData) {
+        let parsedData = JSON.parse(savedData);
+        document.getElementById("login").value = parsedData.login;
+        document.getElementById("password").value = parsedData.password;
+    }
+};
 
-//     if (login && password) {
-//         let userData = {
-//             login: login,
-//             password: password
-//         };
 
-//         localStorage.setItem("userData", JSON.stringify(userData));
 
-//         alert("Ma'lumotlar muvaffaqiyatli saqlandi!");
-//     } else {
-//         alert("Iltimos, barcha maydonlarni to'ldiring.");
-//     }
-// });
 
-// window.onload = function() {
-//     let savedData = localStorage.getItem("userData");
+window.onload = function() {
+    let savedData = localStorage.getItem("userData");
 
-//     if (savedData) {
-//         let parsedData = JSON.parse(savedData);
-//         document.getElementById("login").value = parsedData.login;
-//         document.getElementById("password").value = parsedData.password;
-//     }
-// };
+    if (savedData) {
+        let parsedData = JSON.parse(savedData);
+        document.getElementById("login").value = parsedData.login;
+        document.getElementById("password").value = parsedData.password;
+    }
+};
 
 // =============================== STUDENT LIST ============================================
 
