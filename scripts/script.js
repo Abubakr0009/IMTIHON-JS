@@ -70,7 +70,7 @@ function index() {
 
 
 function signin() {
-    alert("redicting to the Dashboard...");
+    alert("re to the Dashboard...");
     window.location.href = "student_list.html"; 
 
 }
