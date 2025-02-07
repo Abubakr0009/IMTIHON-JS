@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Students List</title>
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        height: 100vh;
+      }
+      .sidebar {
+        background-color: #f4f4f4;
+        width: 20%;
+        padding: 20px;
+        text-align: center;
+        border-right: 1px solid #ddd;
+        background: #f2eae1;
+      }
+      h1 {
+        font-family: Montserrat;
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 24.38px;
+        text-align: left;
+        margin-bottom: 114px;
+      }
+      .sidebar img {
+        border-radius: 50%;
+        width: 100px;
+        height: 100px;
+      }
+      .sidebar h2 {
+        margin: 10px 0;
+        font-size: 18px;
+      }
+      .sidebar button {
+        cursor: pointer;
+        margin-top: 20px;
+        font-size: 16px;
+        margin-top: 20px;
+        border: none;
+        background: transparent;
+      }
+
+      .last_btn button {
+        margin-bottom: 250px;
+        background-color: #ffc107;
+        color: #000;
+        border: none;
+        padding: 10px 20px;
+      }
+
+      .content {
+        width: 80%;
+        padding: 20px;
+        background: #f2eae1;
+      }
+      .content h2 {
+        text-align: left;
+        color: #333;
+      }
+      .form-group {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+      input,
+      button {
+        padding: 10px;
+        font-size: 14px;
+      }
+      button.add {
+        background-color: #ffc107;
+        border: none;
+        cursor: pointer;
+      }
+      button.add:disabled {
+        background-color: #ddd;
+        cursor: not-allowed;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        
+      }
+      th {
+        background-color: #f4f4f4;
+        width: 1110px;
+        height: 85px;
+        top: 186px;
+        left: 300px;
+        gap: 0px;
+        border-radius: 8px ;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sidebar">
+      <h1>Admin Student</h1>
+      <img src="./pexels-photo-2379004 1.png" alt="Admin" />
+      <h2>Karthi Madesh</h2>
+      <div class="last_btn">
+        <button><i class="bx bx-user"></i> Students</button>
+      </div>
+      <button onclick="logout()">Logout</button>
+      <i class="bx bx-log-out"></i>
+    </div>
+    <div class="content">
+      <h2>Students List</h2>
+      <div class="form-group">
+        <input
+          type="text"
+          id="search"
+          placeholder="Search..."
+          onkeyup="searchStudent()"
+        />
+        <button class="add" onclick="showNewStudentForm()">
+          Add New Student
+        </button>
+      </div>
+      <div id="newStudentForm" style="display: none; margin-bottom: 20px">
+        <input
+          type="text"
+          id="studentName"
+          placeholder="Name"
+          oninput="validateForm()"
+        />
+        <input
+          type="email"
+          id="studentEmail"
+          placeholder="Email"
+          oninput="validateForm()"
+        />
+        <input
+          type="text"
+          id="studentPhone"
+          placeholder="Phone"
+          oninput="validateForm()"
+        />
+        <input
+          type="text"
+          id="enrollNumber"
+          placeholder="Enroll Number"
+          oninput="validateForm()"
+        />
+        <input
+          type="date"
+          id="admissionDate"
+          placeholder="Admission Date"
+          oninput="validateForm()"
+        />
+        <button class="add" id="addStudentBtn" onclick="addStudent()" disabled>
+          Add Student
+        </button>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Enroll Number</th>
+            <th>Admission Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="studentList"></tbody>
+      </table>
+    </div>
+    <script>
+      let students = [];
+
+      function showNewStudentForm() {
+        document.getElementById("newStudentForm").style.display = "flex";
+      }
+
+      function validateForm() {
+        const name = document.getElementById("studentName").value;
+        const email = document.getElementById("studentEmail").value;
+        const phone = document.getElementById("studentPhone").value;
+        const enrollNumber = document.getElementById("enrollNumber").value;
+        const admissionDate = document.getElementById("admissionDate").value;
+
+        const addButton = document.getElementById("addStudentBtn");
+        addButton.disabled = !(
+          name &&
+          email &&
+          phone &&
+          enrollNumber &&
+          admissionDate
+        );
+      }
+
+      function addStudent() {
+        let name = document.getElementById("studentName").value;
+        let email = document.getElementById("studentEmail").value;
+        let phone = document.getElementById("studentPhone").value;
+        let enrollNumber = document.getElementById("enrollNumber").value;
+        let admissionDate = document.getElementById("admissionDate").value;
+        if (name && email && phone && enrollNumber && admissionDate) {
+          students.push({ name, email, phone, enrollNumber, admissionDate });
+          document.getElementById("studentName").value = "";
+          document.getElementById("studentEmail").value = "";
+          document.getElementById("studentPhone").value = "";
+          document.getElementById("enrollNumber").value = "";
+          document.getElementById("admissionDate").value = "";
+          document.getElementById("addStudentBtn").disabled = true;
+          document.getElementById("newStudentForm").style.display = "none";
+          renderList();
+        }
+      }
+
+      function editStudent(index) {
+        let student = students[index];
+        let name = prompt("Edit name:", student.name);
+        let email = prompt("Edit email:", student.email);
+        let phone = prompt("Edit phone:", student.phone);
+        let enrollNumber = prompt("Edit enroll number:", student.enrollNumber);
+        let admissionDate = prompt(
+          "Edit admission date:",
+          student.admissionDate
+        );
+        if (name && email && phone && enrollNumber && admissionDate) {
+          students[index] = { name, email, phone, enrollNumber, admissionDate };
+          renderList();
+        }
+      }
+
+      function deleteStudent(index) {
+        students.splice(index, 1);
+        renderList();
+      }
+
+      function searchStudent() {
+        let filter = document.getElementById("search").value.toLowerCase();
+        renderList(filter);
+      }
+
+      function renderList(filter = "") {
+        let list = document.getElementById("studentList");
+        list.innerHTML = "";
+        students.forEach((student, index) => {
+          if (
+            student.name.toLowerCase().includes(filter) ||
+            student.email.toLowerCase().includes(filter) ||
+            student.phone.toLowerCase().includes(filter) ||
+            student.enrollNumber.toLowerCase().includes(filter)
+          ) {
+            list.innerHTML += `<tr>
+                        <td>${student.name}</td>
+                        <td>${student.email}</td>
+                        <td>${student.phone}</td>
+                        <td>${student.enrollNumber}</td>
+                        <td>${student.admissionDate}</td>
+                        <td>
+                            <button onclick="editStudent(${index})">Edit</button>
+                            <button onclick="deleteStudent(${index})">Delete</button>
+                        </td>
+                    </tr>`;
+          }
+        });
+      }
+
+      function logout() {
+        alert("Redirecting to the Dashboard...");
+        window.location.href = "index.html";
+      }
+    </script>
+  </body>
+</html>
